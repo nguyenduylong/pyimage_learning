@@ -3,19 +3,29 @@ import argparse
 import requests
 import cv2
 import os
+import json
 
 ap = argparse.ArgumentParser()
-ap.add_argument('-u', '--urls', required=True, help='path to file containing image URLs')
+ap.add_argument('-i', '--input', required=True, help='path to json input file')
 ap.add_argument('-o', '--output', required=True, help='path to output directory of images')
 args = vars(ap.parse_args())
 
-rows = open(args["urls"]).read().strip().split("n")
-total = 0
-
-for url in rows:
+data_rows = open(args['input']).read().strip().splitlines()
+total = 0;
+folder_names= []
+for data_row in data_rows:
+    parsed_json = json.loads(data_row);
+    content = parsed_json['content'];
+    labels = parsed_json['annotation']['labels'];
+    if not labels:
+        continue
+    output_folder = os.path.join(args['output'], labels[0])
+    if labels[0] not in folder_names:
+        os.mkdir(output_folder)
+        folder_names.append(labels[0])
     try:
-        r = requests.get(url, timeout=60)
-        p = os.path.join(args['ouput'], '{}.jpg').format(str(total).zfill(8))
+        r = requests.get(content, timeout=60)
+        p = os.path.join(output_folder, '{}.jpg').format(str(total).zfill(8))
         f = open(p, 'wb')
         f.write(r.content)
         f.close()
@@ -24,14 +34,4 @@ for url in rows:
     except:
         print("[INFO] error downloading {}...skipping".format(p))
 
-for imagePath in paths.list_images(args['output']):
-    delete = False
-    try:
-        image = cv2.imread(imagePath)
-        if image is None:
-            delete = True
-    except:
-        delete = True
-    if delete:
-        os.remove(imagePath)
         
