@@ -1,6 +1,7 @@
 import matplotlib
 matplotlib.use("Agg")
 from keras.preprocessing.image import img_to_array
+from sklearn.preprocessing import LabelBinarizer
 from imutils import paths
 import numpy as np
 import random
@@ -16,6 +17,7 @@ dataset_path = '.\pokemon'
 imagePaths = sorted(list(paths.list_images(dataset_path)))
 random.seed(42)
 random.shuffle(imagePaths)
+pokemons_names = [ 'Charmander', 'Pikachu', 'Bulbasaur', 'Squirtle', 'Caterpie', 'Butterfree', 'Mankey', 'Machop', 'Seel', 'Cubone', 'Koffing', 'Mr. Mime', 'Snorlax']
 
 for imagePath in imagePaths:
     image = cv2.imread(imagePath)
@@ -24,10 +26,11 @@ for imagePath in imagePaths:
     data.append(image)
 
     label = imagePath.split(os.path.sep)[-2]
-    labels.append(label)
+    labels.append(pokemons_names.index(label))
 
 data =  np.array(data, dtype="float")
-labels = np.array(labels, dtype="")
+labels = np.array(labels, dtype="int8")
+print(labels)
 with h5py.File('./pokemon/output/pokemon_data.h5', 'w') as f:
     f.create_dataset('images', data=data)
     f.create_dataset('labels', data=labels)
