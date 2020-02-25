@@ -2,7 +2,7 @@ from bing_image_api_using import PokemonImageDownload
 import argparse
 import os
 
-pokemons_names = [ 'Charmander', 'Pikachu', 'Bulbasaur', 'Squirtle', 'Caterpie', 'Butterfree', 'Mankey', 'Machop', 'Seel', 'Cubone', 'Koffing', 'Mr. Mime', 'Snorlax']
+pokemons_names = [ 'Charmander', 'Pikachu', 'Bulbasaur', 'Squirtle', 'Caterpie', 'Butterfree', 'Mankey', 'Machop', 'Cubone', 'Koffing', 'Mr. Mime', 'Snorlax']
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-o", "--output", required=True,

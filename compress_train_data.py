@@ -31,7 +31,7 @@ for imagePath in imagePaths:
 data =  np.array(data, dtype="float")
 labels = np.array(labels, dtype="int8")
 print(labels)
-with h5py.File('./pokemon/output/pokemon_data.h5', 'w') as f:
+with h5py.File('./pokemon/compress_data/pokemon_data.h5', 'w') as f:
     f.create_dataset('images', data=data)
     f.create_dataset('labels', data=labels)
 
