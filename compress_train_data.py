@@ -13,11 +13,11 @@ IMAGE_DIMS = (96, 96, 3)
 
 data = []
 labels = []
-dataset_path = '.\pokemon'
+dataset_path = './pokemon'
 imagePaths = sorted(list(paths.list_images(dataset_path)))
 random.seed(42)
 random.shuffle(imagePaths)
-pokemons_names = [ 'Charmander', 'Pikachu', 'Bulbasaur', 'Squirtle', 'Caterpie', 'Butterfree', 'Mankey', 'Machop', 'Seel', 'Cubone', 'Koffing', 'Mr. Mime', 'Snorlax']
+pokemons_names = [ 'Charmander', 'Pikachu', 'Bulbasaur', 'Squirtle', 'Caterpie', 'Butterfree', 'Mankey', 'Machop', 'Cubone', 'Koffing', 'Mr. Mime', 'Snorlax']
 
 for imagePath in imagePaths:
     image = cv2.imread(imagePath)
